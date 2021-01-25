@@ -1,0 +1,241 @@
+C51 COMPILER V9.60.0.0   KEY                                                               02/02/2020 13:41:26 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KEY
+OBJECT MODULE PLACED IN .\Objects\key.obj
+COMPILER INVOKED BY: D:\Keil v5\C51\BIN\C51.EXE key.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\key.l
+                    -st) TABS(2) OBJECT(.\Objects\key.obj)
+
+line level    source
+
+   1          //#include<STC15F2K60S2.h>
+   2          //#define uint unsigned int 
+   3          //#define uchar unsigned char
+   4          //  
+   5          //uchar a;
+   6          //uchar s7,s6,s5,s4;
+   7          //  void delay(uint z)
+   8          //  {
+   9          //     uint x,y;
+  10          //     for(x=z;x>0;x--)
+  11          //     for(y=810;y>0;y--);
+  12          //  }
+  13          //  void keyscan()
+  14          //  {
+  15          //     if(P30==0)
+  16          //       {
+  17          //          delay(10);
+  18          //         if(P30==0)
+  19          //         {
+  20          //           //P0=0xfe;
+  21          ////           a--;
+  22          ////           P0=a;
+  23          //           s7=1;
+  24          //         }
+  25          //         while(!P30);
+  26          //       }
+  27          //       else if(P31==0)
+  28          //       {
+  29          //         delay(10);
+  30          //         if(P31==0)
+  31          //         {
+  32          //            //P0=0xfd;
+  33          //           s6=1;
+  34          //         }
+  35          //       }
+  36          //       else if(P32==0)
+  37          //       {
+  38          //         delay(10);
+  39          //         if(P32==0)
+  40          //         {
+  41          //            P0=0xfb;
+  42          //         }
+  43          //       }
+  44          //       else if(P33==0)
+  45          //       {
+  46          //         delay(10);
+  47          //         if(P33==0)
+  48          //         {
+  49          //            P0=0xf7;
+  50          //         }
+  51          //       }
+  52          //  }
+  53          //  void main()
+  54          //  {
+C51 COMPILER V9.60.0.0   KEY                                                               02/02/2020 13:41:26 PAGE 2   
+
+  55          //    P2=0xa0;
+  56          //    P0=0x00;
+  57          //    P2=0x80;
+  58          //    P0=0xff;
+  59          //    while(1)
+  60          //     {
+  61          //        keyscan();
+  62          //        if(s7==1)
+  63          //        {
+  64          //          s7=0;
+  65          //          P0=0x00;
+  66          //        }
+  67          //      else if(s6==1)
+  68          //        {
+  69          //          s6=0;
+  70          //          P0=0xff;
+  71          //        }
+  72          //      else if(s5==1)
+  73          //      {
+  74          //         s5=0;
+  75          //         P2=0xa0;
+  76          //      }
+  77          //     }
+  78          //  }
+  79          
+  80          #include<STC15F2K60S2.h>
+  81          #define uint unsigned int 
+  82          #define uchar unsigned char
+  83          
+  84          uchar temp;
+  85          uchar a=0x00;
+  86          void delay(uint z);
+  87          void keyscan16();
+  88          void main()
+  89          {
+  90   1        P2=0xa0;
+  91   1        P0=0x00;
+  92   1        P2=0x80;
+  93   1        P0=0xff;
+  94   1         while(1)
+  95   1         {
+  96   2            keyscan16();
+  97   2         }
+  98   1      }
+  99          void delay(uint z)
+ 100          {
+ 101   1          uint x,y;
+ 102   1          for(x=z;x>0;x--)
+ 103   1          for(y=810;y>0;y--);
+ 104   1      }
+ 105          void keyscan16()
+ 106          {
+ 107   1            P3=0x7f;
+ 108   1            P42=0;
+ 109   1            temp=P3;
+ 110   1            temp=temp&0x0f; 
+ 111   1           if(temp!=0x0f)
+ 112   1           {
+ 113   2             delay(10);
+ 114   2             temp=P3;
+ 115   2             temp=temp&0x0f;
+ 116   2             if(temp!=0x0f)
+C51 COMPILER V9.60.0.0   KEY                                                               02/02/2020 13:41:26 PAGE 3   
+
+ 117   2             {
+ 118   3                temp=P3;
+ 119   3               switch(temp)
+ 120   3               {
+ 121   4                 case 0x7e:a=a-1;P0=a;break;
+ 122   4                 case 0x7d:P0=0xff;break;
+ 123   4                 case 0x7b:P0=0xaa;break;
+ 124   4                 case 0x77:P0=0x55;break;
+ 125   4               }
+ 126   3               while(temp!=0x0f)
+ 127   3               {
+ 128   4                   temp=P3;
+ 129   4                   temp=temp&0x0f;
+ 130   4               }
+ 131   3             }
+ 132   2           }
+ 133   1           
+ 134   1            P3=0xdf;
+ 135   1            P44=0;
+ 136   1            temp=P3;
+ 137   1            temp=temp&0x0f; 
+ 138   1           if(temp!=0x0f)
+ 139   1           {
+ 140   2             delay(10);
+ 141   2             temp=P3;
+ 142   2             temp=temp&0x0f;
+ 143   2             if(temp!=0x0f)
+ 144   2             {
+ 145   3                temp=P3;
+ 146   3               switch(temp)
+ 147   3               {
+ 148   4                 case 0xde:a=a-1;P0=a;break;
+ 149   4                 case 0xdd:P0=0xff;break;
+ 150   4                 case 0xdb:P0=0xaa;break;
+ 151   4                 case 0xd7:P0=0x55;break;
+ 152   4               }
+ 153   3               while(temp!=0x0f)
+ 154   3               {
+ 155   4                   temp=P3;
+ 156   4                   temp=temp&0x0f;
+ 157   4               }
+ 158   3             }
+ 159   2           }
+ 160   1           
+ 161   1           P3=0xef;
+ 162   1            temp=P3;
+ 163   1            temp=temp&0x0f; 
+ 164   1           if(temp!=0x0f)
+ 165   1           {
+ 166   2             delay(10);
+ 167   2             temp=P3;
+ 168   2             temp=temp&0x0f;
+ 169   2             if(temp!=0x0f)
+ 170   2             {
+ 171   3                temp=P3;
+ 172   3               switch(temp)
+ 173   3               {
+ 174   4                 case 0xee:a=a-1;P0=a;break;
+ 175   4                 case 0xed:P0=0xff;break;
+ 176   4                 case 0xeb:P0=0xaa;break;
+ 177   4                 case 0xe7:P0=0x55;break;
+ 178   4               }
+C51 COMPILER V9.60.0.0   KEY                                                               02/02/2020 13:41:26 PAGE 4   
+
+ 179   3               while(temp!=0x0f)
+ 180   3               {
+ 181   4                   temp=P3;
+ 182   4                   temp=temp&0x0f;
+ 183   4               }
+ 184   3             }
+ 185   2           }
+ 186   1            P3=0xbf;
+ 187   1            temp=P3;
+ 188   1            temp=temp&0x0f; 
+ 189   1           if(temp!=0x0f)
+ 190   1           {
+ 191   2             delay(10);
+ 192   2             temp=P3;
+ 193   2             temp=temp&0x0f;
+ 194   2             if(temp!=0x0f)
+ 195   2             {
+ 196   3                temp=P3;
+ 197   3               switch(temp)
+ 198   3               {
+ 199   4                 case 0xbe:a=a-1;P0=a;break;
+ 200   4                 case 0xbd:P0=0xff;break;
+ 201   4                 case 0xbb:P0=0xaa;break;
+ 202   4                 case 0xb7:P0=0x55;break;
+ 203   4               }
+ 204   3               while(temp!=0x0f)
+ 205   3               {
+ 206   4                   temp=P3;
+ 207   4                   temp=temp&0x0f;
+ 208   4               }
+ 209   3             }
+ 210   2           }
+ 211   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    392    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
